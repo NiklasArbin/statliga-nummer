@@ -61,19 +61,12 @@ namespace StatligaNummer
 
         public bool IsValid()
         {
-            for (int index = 0; index < _personNummer.Length; index++)
-            {
-                char c = _personNummer[index];
-                var n = c - 48;
-                var k = (index % 2 == 0 ? 1 : 2);
-                var sum = k / 10 + k % 10;
-            }
-            return false;
-            //var sum = _personNummer
-            //        .Select((e, i) => ((int)e - 48) * (i % 2 == 0 ? 1 : 2))
-            //        .Sum((e) => e / 10 + e % 10);
-            //var kontroll = sum % 10;
-            //return kontroll == Kontrollsiffra;
+            var sum = _personNummer
+                    .Reverse()
+                    .Select((e, i) => ((int)e - 48) * (i % 2 == 0 ? 2 : 1))
+                    .Sum((e) => e / 10 + e % 10);
+            var kontroll = 10 - (sum % 10);
+            return kontroll == Kontrollsiffra;
         }
     }
 }
